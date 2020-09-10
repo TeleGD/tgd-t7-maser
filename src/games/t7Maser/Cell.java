@@ -1,4 +1,4 @@
-package games.t7Laser;
+package games.t7Maser;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;

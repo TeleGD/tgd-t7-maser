@@ -1,4 +1,4 @@
-package games.t7Laser;
+package games.t7Maser;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -16,9 +16,9 @@ public class Grid {
 	private int maxRows; //limite horizontale
 	private int maxCols;
 
-	public List<Laser> laserList;
+	public List<Maser> maserList;
 	public List<Ennemy> ennemyList;
-	private int laserTimer;
+	private int maserTimer;
 
 	private int waveTimer;
 	private int waveNumber;
@@ -35,8 +35,8 @@ public class Grid {
 			for(int j=0;j<maxCols;j++) //init cologne
 				grid[i][j] = new Cell(world, i,j,-1,false);
 
-		laserList = new LinkedList<Laser>();
-		laserTimer = 100;
+		maserList = new LinkedList<Maser>();
+		maserTimer = 100;
 		waveTimer = 200;
 		waveNumber = 0;
 
@@ -61,7 +61,7 @@ public class Grid {
 			for(int j=0;j<this.columns;j++) //init cologne
 				grid[i][j].getImage().draw(280+360-this.getColumns()*100*w.getRenderScale()/2+i*100*w.getRenderScale(),0+j*100*w.getRenderScale()+360-this.getColumns()*100*w.getRenderScale()/2,100*w.getRenderScale(),100*w.getRenderScale());
 
-		for(Laser l : laserList)
+		for(Maser l : maserList)
 			l.render(arg0, arg1, arg2);
 
 		for(Ennemy e : ennemyList)
@@ -81,13 +81,13 @@ public class Grid {
 		if(waveNumber % 5 == 2 && waveTimer == 1)
 			addEnnemy();
 
-		laserTimer--;
-		if(laserTimer <= 0){
-			addLaser();
-			laserTimer = Math.max(50-waveNumber*5, 0)+20;
+		maserTimer--;
+		if(maserTimer <= 0){
+			addMaser();
+			maserTimer = Math.max(50-waveNumber*5, 0)+20;
 		}
 		try{
-			for(Laser l : laserList)
+			for(Maser l : maserList)
 				l.update(arg0, arg1, arg2);
 
 			for(Ennemy e : ennemyList)
@@ -186,18 +186,18 @@ public class Grid {
 
 	}
 
-	public void addLaser(){
+	public void addMaser(){
 		Random r = new Random();
 		boolean axe = r.nextBoolean();
 		if(axe) //horizontal
-			laserList.add(new Laser(w,0,r.nextInt(columns)));
+			maserList.add(new Maser(w,0,r.nextInt(columns)));
 		else //vertical
 
-			laserList.add(new Laser(w,1,r.nextInt(rows)));
+			maserList.add(new Maser(w,1,r.nextInt(rows)));
 	}
 
-	public void removeLaser(Laser l){
-		laserList.remove(l);
+	public void removeMaser(Maser l){
+		maserList.remove(l);
 	}
 
 	public void addMine(){

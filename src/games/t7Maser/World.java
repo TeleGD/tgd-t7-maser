@@ -1,4 +1,4 @@
-package games.t7Laser;
+package games.t7Maser;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ import app.AppWorld;
 
 public class World extends AppWorld {
 
-	public final static String GAME_FOLDER_NAME="t7Laser";
+	public final static String GAME_FOLDER_NAME="t7Maser";
 	public final static String DIRECTORY_SOUNDS="musics"+File.separator+GAME_FOLDER_NAME+File.separator;
 	public final static String DIRECTORY_MUSICS="musics"+File.separator+GAME_FOLDER_NAME+File.separator;
 	public final static String DIRECTORY_IMAGES="images"+File.separator+GAME_FOLDER_NAME+File.separator;
