@@ -1,6 +1,5 @@
 package games.t7Maser;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -9,9 +8,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Music;
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.Sound;
+import org.newdawn.slick.openal.Audio;
 import org.newdawn.slick.state.StateBasedGame;
 
 import app.AppFont;
@@ -21,30 +18,25 @@ import app.AppWorld;
 
 public class World extends AppWorld {
 
-	public final static String GAME_FOLDER_NAME="t7Maser";
-	public final static String DIRECTORY_SOUNDS="musics"+File.separator+GAME_FOLDER_NAME+File.separator;
-	public final static String DIRECTORY_MUSICS="musics"+File.separator+GAME_FOLDER_NAME+File.separator;
-	public final static String DIRECTORY_IMAGES="images"+File.separator+GAME_FOLDER_NAME+File.separator;
+	public final static String DIRECTORY_SOUNDS="/sounds/t7Maser/";
+	public final static String DIRECTORY_MUSICS="/musics/t7Maser/";
+	public final static String DIRECTORY_IMAGES="/images/t7Maser/";
 	public static final Font Font = AppLoader.loadFont("/fonts/vt323.ttf", AppFont.BOLD, 18);
 
 	private List<Player> players;
 	private List<Player> morts;
 	private static Grid grid;
-	private static Music music;
-	private static Music end;
-	static Sound cat;
+	private static Audio music;
+	private static Audio end;
+	static Audio cat;
 
 	static {
-		try {
-			music = new Music(DIRECTORY_MUSICS+"EpicSaxGuy.ogg");
-			end = new Music(DIRECTORY_MUSICS+"EndSong.ogg");
-			cat= new Sound(DIRECTORY_SOUNDS+"Cat.ogg");
-		} catch (SlickException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		music = AppLoader.loadAudio(DIRECTORY_MUSICS+"EpicSaxGuy.ogg");
+		end = AppLoader.loadAudio(DIRECTORY_SOUNDS+"EndSong.ogg");
+		cat= AppLoader.loadAudio(DIRECTORY_SOUNDS+"Cat.ogg");
 	}
 
+	private float musicPos;
 	private float renderScale = 1;
 	public int height;
 	public int width;
@@ -102,7 +94,7 @@ public class World extends AppWorld {
 
 			if (morts.size()>=nbJoueursInit) {
 				music.stop();
-				end.play();
+				end.playAsSoundEffect(1f, .3f, false);
 				Player tri[] = new Player[morts.size()];
 				for (int i=0; i<morts.size(); i++) {
 					tri[i] = morts.get(i);
@@ -139,7 +131,7 @@ public class World extends AppWorld {
 	}
 
 	@Override
-	public void play (GameContainer container, StateBasedGame game) {
+	public void play(GameContainer container, StateBasedGame game) {
 		AppGame appGame = (AppGame) game;
 		fin = false;
 		grid = new Grid(this,4,4);
@@ -152,19 +144,24 @@ public class World extends AppWorld {
 		for (int i = 0; i < nbJoueursInit; i++) {
 			this.players.add (new Player (this, (-i >> 1 & 1) * (w-1), (i & 1) * (h-1), i, appGame.appPlayers.get(i)));
 		}
-		music.loop();
+		music.playAsMusic(1f, .3f, true);
 	}
 
 	@Override
-	public void pause (GameContainer container, StateBasedGame game) {
-		music.pause ();
-		end.pause ();
+	public void pause(GameContainer container, StateBasedGame game) {
+		this.musicPos = music.getPosition();
+		music.stop();
 	}
 
 	@Override
-	public void resume (GameContainer container, StateBasedGame game) {
-		music.resume ();
-		// end.resume (); // TODO: select which music to resume
+	public void resume(GameContainer container, StateBasedGame game) {
+		music.playAsMusic(1, .3f, true);
+		music.setPosition(this.musicPos);
+	}
+
+	@Override
+	public void stop(GameContainer container, StateBasedGame game) {
+		music.stop();
 	}
 
 }

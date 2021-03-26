@@ -3,8 +3,9 @@ package games.t7Maser;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
+
+import app.AppLoader;
 
 public class Cell {
 
@@ -37,13 +38,9 @@ public class Cell {
 		this.w=world;
 
 		if(NORMAL==null){
-			try {
-				NORMAL= new Image(World.DIRECTORY_IMAGES+"Cell.png");
-				MINE=new Image(World.DIRECTORY_IMAGES+"Mine.png");
-				BONUS=new Image(World.DIRECTORY_IMAGES+"Bonus.png");
-			} catch (SlickException e) {
-				e.printStackTrace();
-			}
+			NORMAL= AppLoader.loadPicture(World.DIRECTORY_IMAGES+"Cell.png");
+			MINE=AppLoader.loadPicture(World.DIRECTORY_IMAGES+"Mine.png");
+			BONUS=AppLoader.loadPicture(World.DIRECTORY_IMAGES+"Bonus.png");
 		}
 	}
 
@@ -115,7 +112,7 @@ public class Cell {
 			w.getPlayers().get(contains).addScore(77);
 			w.getGrid().getCell(x, y).setHasBonus(false);
 			w.getGrid().getCell(x,y).setImageType(NORMAL_TYPE);
-			World.cat.play();
+			World.cat.playAsSoundEffect(1f, .3f, false);
 		}
 
 	}

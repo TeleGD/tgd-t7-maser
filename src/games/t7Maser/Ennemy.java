@@ -5,6 +5,8 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.state.StateBasedGame;
 
+import app.AppLoader;
+
 public class Ennemy {
 	private int x = 0;
 	private int y = 0;
@@ -38,9 +40,7 @@ public class Ennemy {
 	}
 
 	public Ennemy(World world, int x, int y){
-		try{
-			image = new Image(World.DIRECTORY_IMAGES+"nyan.png");
-		}catch(Exception e){}
+		image = AppLoader.loadPicture(World.DIRECTORY_IMAGES+"nyan.png");
 		this.x = x;
 		this.y = y;
 		w=world;

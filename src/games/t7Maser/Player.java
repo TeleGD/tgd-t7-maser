@@ -4,10 +4,10 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 import app.AppInput;
+import app.AppLoader;
 import app.AppPlayer;
 
 public class Player{
@@ -40,14 +40,10 @@ public class Player{
 		this.y = y;
 		w.getGrid().getCell(x,y).setContains(i);
 		this.score=0;
-		try {
-			this.down= new Image(World.DIRECTORY_IMAGES+"Char_down.png");
-			this.up=new Image(World.DIRECTORY_IMAGES+"Char_up.png");
-			this.right=new Image(World.DIRECTORY_IMAGES+"Char_right.png");
-			this.left=new Image(World.DIRECTORY_IMAGES+"Char_left.png");
-		} catch (SlickException e) {
-			e.printStackTrace();
-		}
+		this.down= AppLoader.loadPicture(World.DIRECTORY_IMAGES+"Char_down.png");
+		this.up=AppLoader.loadPicture(World.DIRECTORY_IMAGES+"Char_up.png");
+		this.right=AppLoader.loadPicture(World.DIRECTORY_IMAGES+"Char_right.png");
+		this.left=AppLoader.loadPicture(World.DIRECTORY_IMAGES+"Char_left.png");
 		this.setImage(this.down);
 	}
 
